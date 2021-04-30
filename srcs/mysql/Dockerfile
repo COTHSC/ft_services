@@ -1,34 +1,14 @@
-FROM yobasystems/alpine:3.13.5-amd64
+FROM	alpine
 
-ARG BUILD_DATE
-ARG VCS_REF
+RUN		apk add mariadb mariadb-client && \
+		apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted --no-cache && \
+		mkdir -p /run/mysqld/
 
-LABEL maintainer="Dominic Taylor <dominic@yobasystems.co.uk>" \
-    architecture="amd64/x86_64" \
-    mariadb-version="10.5.8" \
-    alpine-version="3.13.5" \
-    build="17-Apr-2021" \
-    org.opencontainers.image.title="alpine-mariadb" \
-    org.opencontainers.image.description="MariaDB Docker image running on Alpine Linux" \
-    org.opencontainers.image.authors="Dominic Taylor <dominic@yobasystems.co.uk>" \
-    org.opencontainers.image.vendor="Yoba Systems" \
-    org.opencontainers.image.version="v10.5.8" \
-    org.opencontainers.image.url="https://hub.docker.com/r/yobasystems/alpine-mariadb/" \
-    org.opencontainers.image.source="https://github.com/yobasystems/alpine-mariadb" \
-    org.opencontainers.image.revision=$VCS_REF \
-    org.opencontainers.image.created=$BUILD_DATE
-
-RUN apk add --no-cache mariadb mariadb-client mariadb-server-utils pwgen && \
-    rm -f /var/cache/apk/*
-
-ADD files/run.sh /scripts/run.sh
-RUN mkdir /docker-entrypoint-initdb.d && \
-    mkdir /scripts/pre-exec.d && \
-    mkdir /scripts/pre-init.d && \
-    chmod -R 755 /scripts
+COPY	/srcs/telegraf.conf		/etc/telegraf/
+COPY	/srcs/my.cnf			/etc/
+COPY	/srcs/wordpress.sql		/
+COPY	/srcs/start.sh			/
 
 EXPOSE 3306
 
-VOLUME ["/var/lib/mysql"]
-
-ENTRYPOINT ["/scripts/run.sh"]
+ENTRYPOINT	sh start.sh
