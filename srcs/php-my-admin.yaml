@@ -37,6 +37,9 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
+          volumeMounts:
+            - name: pma-config
+              mountPath: /www/phpmyadmin/
           env:
             - name: PMA_HOST
               value: mysql-service
@@ -47,13 +50,18 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: ROOT_PASSWORD
+      volumes:
+        - name: pma-config
+          configMap:
+            name: php-my-admin-config
+
 
 ---
 
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: php-my-admin
+  name: php-my-admin-config
 data:
   config.inc.php: |
     <?php

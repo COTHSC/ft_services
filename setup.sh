@@ -1,7 +1,8 @@
 echo "hi, starting..."
 
+minikube delete
+
 minikube --vm-driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
-minikube addons enable ingress
 minikube addons enable dashboard
 minikube dashboard &
 
