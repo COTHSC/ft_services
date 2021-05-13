@@ -46,7 +46,8 @@ spec:
               - containerPort: 443
               volumeMounts:
               - name: nginx-config
-                mountPath: /var/
+                mountPath: /etc/nginx/nginx.conf
+                subPath: nginx.conf
             volumes:
             - name: nginx-config
               configMap:
@@ -62,7 +63,7 @@ data:
   nginx.conf: |
     # /etc/nginx/nginx.conf
 
-    user jescully;
+    user www;
 
     # Set number of worker processes automatically based on number of CPU cores.
     worker_processes auto;

@@ -39,10 +39,12 @@ spec:
             - containerPort: 5000
           volumeMounts:
             - name: pma-config
-              mountPath: /www/phpmyadmin/
+              mountPath: /www/phpmyadmin/config.inc.php
+              subPath: config.inc.php
           env:
             - name: PMA_HOST
-              value: mysql-service
+              value: localhost
+              # value: mysql-service
             - name: PMA_PORT
               value: "3306"
             - name: MYSQL_ROOT_PASSWORD
