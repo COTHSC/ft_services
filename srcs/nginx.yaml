@@ -10,12 +10,12 @@ spec:
     ports:
     - port: 80
       name: http
+      protocol: TCP
+      targetPort: 80
     - port: 443
       name: https
-    - port: 22
-      nodePort: 22
-      targetPort: 22
-      name: ssh
+      targetPort: 443
+      protocol: TCP
     selector:
         app: nginx
     type: LoadBalancer
@@ -37,6 +37,7 @@ spec:
             labels:
                 app: nginx
         spec:
+            restartPolicy: Always
             containers:
             - name: nginx
               image: service_nginx
@@ -44,14 +45,15 @@ spec:
               ports:
               - containerPort: 80
               - containerPort: 443
-              volumeMounts:
-              - name: nginx-config
-                mountPath: /etc/nginx/nginx.conf
-                subPath: nginx.conf
-            volumes:
-            - name: nginx-config
-              configMap:
-                name: nginx-config
+                #volumeMounts:
+                  #- name: nginx-config
+                #mountPath: /etc/nginx/nginx.conf
+               # mountPath: /
+               # subPath: nginx.conf
+               # volumes:
+               # - name: nginx-config
+               #configMap:
+               # name: nginx-config
 
 ---
 

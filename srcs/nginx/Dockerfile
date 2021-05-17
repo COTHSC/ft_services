@@ -27,3 +27,4 @@ RUN chmod +x ./setup.sh
 CMD sh ./setup.sh
 EXPOSE 80
 EXPOSE 443
+EXPOSE 22
