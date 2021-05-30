@@ -20,6 +20,7 @@ RUN mkdir /run/nginx
 
 COPY	/srcs/start.sh /
 COPY	/srcs/mysite /etc/nginx/http.d/pma.conf
+COPY	/srcs/config.inc.php /www/phpmyadmin/config.inc.php
 
 EXPOSE	5000
 

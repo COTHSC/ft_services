@@ -2,7 +2,7 @@ echo "hi, starting..."
 
 minikube delete
 
-minikube driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
+minikube --driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
 minikube addons enable dashboard
 
 minikube dashboard &

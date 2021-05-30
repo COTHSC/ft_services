@@ -2,16 +2,16 @@ server {
 
     # SSL configuration
 
-    listen 5000 ssl;
-    listen [::]:5000 ssl;
+    listen 5050 ssl;
+    listen [::]:5050 ssl;
     
-    server_name phpmyadmin;
+    server_name wordpress;
     
     ssl_certificate     /etc/nginx/ssl/mysite.crt;
     ssl_certificate_key /etc/nginx/ssl/mysite.key;
 
 
-	root /www/phpmyadmin;
+	root /www/wordpress;
 	index index.html index.htm index.nginx-debian.html index.php;
 
 	location / {

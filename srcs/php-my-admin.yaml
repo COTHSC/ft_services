@@ -37,14 +37,9 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
-          volumeMounts:
-            - name: pma-config
-              mountPath: /www/phpmyadmin/config.inc.php
-              subPath: config.inc.php
           env:
             - name: PMA_HOST
-              value: localhost
-              # value: mysql-service
+              value: 'mysql-service.default.svc.cluster.local'
             - name: PMA_PORT
               value: "3306"
             - name: MYSQL_ROOT_PASSWORD
@@ -52,11 +47,11 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: ROOT_PASSWORD
-      volumes:
-        - name: pma-config
-          configMap:
-            name: php-my-admin-config
-
+            - name: PMA_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: ROOT_USER
 
 ---
 
@@ -95,12 +90,9 @@ data:
 
     /* Authentication type */
     $cfg['Servers'][$i]['auth_type'] = 'cookie';
-
+    /*service.cluster.svc.cluster.local*/
     /* Server parameters */
-    $cfg['Servers'][$i]['host'] = 'mysql';
-    $cfg['Servers'][$i]['port'] = '3306';
-    $cfg['Servers'][$i]['user'] = 'admin';
-    $cfg['Servers'][$i]['password'] = 'password';
+    $cfg['Servers'][$i]['host'] = 'mysql-service.default.svc.cluster.local';
     $cfg['Servers'][$i]['compress'] = 'false';
     $cfg['Servers'][$i]['AllowNoPassword'] = 'true';
 

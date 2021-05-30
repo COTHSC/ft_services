@@ -23,6 +23,9 @@ RUN ssh-keygen -A
 RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/localhost.key -out /etc/ssl/certs/localhost.crt
 
 COPY setup.sh ./setup.sh
+COPY index.html /var/www/localhost/htdocs/
+COPY mysite.conf /etc/nginx/http.d/
+RUN rm /etc/nginx/http.d/default.conf
 RUN chmod +x ./setup.sh
 CMD sh ./setup.sh
 EXPOSE 80

@@ -40,6 +40,9 @@ echo "⚡ -- Minikube configured and running\n"
 docker build -t service_nginx ./srcs/nginx
 docker build -t service_mysql ./srcs/mysql
 docker build -t service_php-my-admin ./srcs/phpmyadmin
+docker build -t service_wordpress ./srcs/wordpress
+docker build -t service_influxdb ./srcs/influxdb
+docker build -t service_grafana ./srcs/influxdb
 
 echo "⚡ -- Docker Images ready\n"
 #Install MetalLB in the cluster
@@ -49,4 +52,3 @@ kubectl apply -f ./srcs/pods/metallb-configmap.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
 kubectl apply -f ./srcs/
-# Apps pre-requisite (Secrets, configmaps..)

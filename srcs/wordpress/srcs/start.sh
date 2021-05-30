@@ -1,13 +1,8 @@
 #!/bin/sh
 
 
-#chown -R /www/phpmyadmin
-#chmod -R 765 /www/phpmyadmin
-mkdir /www/phpmyadmin/tmp
-chown www:www /www/phpmyadmin/tmp
-chmod 777 /www/phpmyadmin/tmp
-#nginx -c /etc/nginx/nginx.conf
 mkdir /etc/nginx/ssl
+
 rm /etc/nginx/http.d/default.conf
 openssl req -new -newkey rsa:4096 -x509 -nodes \
     -keyout /etc/nginx/ssl/mysite.key -out /etc/nginx/ssl/mysite.crt \
